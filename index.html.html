@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Birthday Surprise 🎂</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffd6e8, #d9c2ff);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #ff4f91;
+            margin-bottom: 30px;
+        }
+
+        /* ENVELOPE */
+        .envelope {
+            width: 300px;
+            height: 200px;
+            background: #ff8fab;
+            position: relative;
+            margin: auto;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .envelope:hover {
+            transform: scale(1.05);
+        }
+
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid #ff6f9c;
+            transform-origin: top;
+            transition: transform 0.8s;
+            z-index: 3;
+        }
+
+        .heart {
+            position: absolute;
+            left: 50%;
+            top: 80px;
+            transform: translateX(-50%);
+            font-size: 45px;
+            z-index: 4;
+        }
+
+        .envelope.open .flap {
+            transform: rotateX(180deg);
+        }
+
+        /* LETTER */
+        .letter {
+            position: absolute;
+            background: white;
+            width: 260px;
+            height: 170px;
+            left: 20px;
+            top: 15px;
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 1s;
+            z-index: 2;
+        }
+
+        .envelope.open .letter {
+            transform: translateY(-140px);
+        }
+
+        .letter h2 {
+            color: #ff4f91;
+            font-size: 22px;
+        }
+
+        /* SURPRISE */
+        #surprise {
+            display: none;
+            margin-top: 80px;
+        }
+
+        #surprise h2 {
+            color: #ff4081;
+            font-size: 32px;
+        }
+
+        /* CAKE */
+        .cake {
+            position: relative;
+            width: 220px;
+            height: 120px;
+            margin: 40px auto 20px;
+            cursor: pointer;
+        }
+
+        .cake-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 220px;
+            height: 80px;
+            background: #8b4513;
+            border-radius: 10px 10px 20px 20px;
+        }
+
+        .icing {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 220px;
+            height: 35px;
+            background: #ffb6c1;
+            border-radius: 20px;
+        }
+
+        /* CANDLES */
+        .candle {
+            position: absolute;
+            width: 12px;
+            height: 45px;
+            background: #fff;
+            top: -25px;
+            border-radius: 5px;
+        }
+
+        .candle:nth-child(1) {
+            left: 45px;
+        }
+
+        .candle:nth-child(2) {
+            left: 104px;
+        }
+
+        .candle:nth-child(3) {
+            left: 163px;
+        }
+
+        .flame {
+            position: absolute;
+            width: 18px;
+            height: 25px;
+            background: orange;
+            border-radius: 50% 50% 50% 50%;
+            top: -22px;
+            left: -3px;
+            box-shadow: 0 0 15px yellow;
+            animation: flicker 0.5s infinite alternate;
+        }
+
+        @keyframes flicker {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.15);
+            }
+        }
+
+        #message {
+            display: none;
+            background: white;
+            padding: 25px;
+            margin-top: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        #message h3 {
+            color: #ff4081;
+            font-size: 26px;
+        }
+
+        #message p {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .confetti {
+            position: fixed;
+            top: -10px;
+            font-size: 25px;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>💌 You Have a Surprise!</h1>
+
+    <!-- ENVELOPE -->
+    <div class="envelope" id="envelope" onclick="openEnvelope()">
+
+        <div class="letter">
+            <h2>For You!💛 </h2>
+            <p>Open me...</p>
+        </div>
+
+        <div class="flap"></div>
+
+        <div class="heart">💗</div>
+
+    </div>
+
+
+    <!-- BIRTHDAY SURPRISE -->
+    <div id="surprise">
+
+        <h2>🎉 Happy Birthday! 🎉</h2>
+
+        <!-- CAKE -->
+        <div class="cake" onclick="blowCandles()">
+
+            <div class="cake-bottom"></div>
+            <div class="icing"></div>
+
+            <div class="candle" style="left:45px;">
+                <div class="flame"></div>
+            </div>
+
+            <div class="candle" style="left:104px;">
+                <div class="flame"></div>
+            </div>
+
+            <div class="candle" style="left:163px;">
+                <div class="flame"></div>
+            </div>
+
+        </div>
+
+        <p>🎂 Click the cake to make a wish!</p>
+
+        <div id="message">
+            <h3>💖 A Special Message 💖</h3>
+
+            <p>
+                HAPPY BIRTHDAYYY, <b>Gelii!!</b> 🎂
+                <br><br>
+                First of all i want to greet you Happy happy BIRTHDAYYY!!
+                And i want you to do for today is, to enjoy and of course don't strss yourself!
+                Especially i want you to know that your very very beutiful, even tho i didn't see you. But i just know it HAHAHA🤭
+
+             <br><br>
+                Wishing you the best for today and may
+                you wishesq came truee!! HAPPY HAPPY BIRTHDAY Gelii!!😁💛
+            
+            
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function openEnvelope() {
+
+        const envelope = document.getElementById("envelope");
+
+        envelope.classList.add("open");
+
+        setTimeout(function() {
+
+            envelope.style.display = "none";
+
+            document.getElementById("surprise").style.display = "block";
+
+        }, 1500);
+    }
+
+
+    function blowCandles() {
+
+        // Hide flames
+        const flames = document.querySelectorAll(".flame");
+
+        flames.forEach(function(flame) {
+            flame.style.display = "none";
+        });
+
+        // Show message
+        document.getElementById("message").style.display = "block";
+
+        // Create confetti
+        for (let i = 0; i < 50; i++) {
+
+            const confetti = document.createElement("div");
+
+            confetti.className = "confetti";
+
+            confetti.innerHTML =
+                ["🎉", "✨", "🎊", "💖", "🌟"][
+                    Math.floor(Math.random() * 5)
+                ];
+
+            confetti.style.left =
+                Math.random() * 100 + "vw";
+
+            confetti.style.animationDuration =
+                (2 + Math.random() * 3) + "s";
+
+            document.body.appendChild(confetti);
+
+            setTimeout(function() {
+                confetti.remove();
+            }, 5000);
+        }
+    }
+
+</script>
+
+</body>
+</html>
